@@ -3,9 +3,11 @@ import React from 'react';
 // Import CSS from Leaflet and plugins.
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet-toolbar/dist/leaflet.toolbar.css';
 
 // Import JS from Leaflet and plugins.
 import 'leaflet.markercluster';
+import 'leaflet-toolbar';
 
 import '../styles/map.scss';
 
@@ -33,16 +35,13 @@ const getLegendControl = () => {
     const grades = [0, 50, 100, 150, 200];
     const labels = [];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
     for (let i = 0; i < grades.length; i++) {
-      labels.push(
-        `
+      labels.push(`
         <div class="legend-item">
           <i style="background:${getColor(grades[i] + 1)}"></i>
           ${grades[i]}${grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'}
         </div>
-      `
-      );
+      `);
     }
     div.innerHTML = labels.join('');
     return div;
@@ -62,6 +61,13 @@ const onEachFeature = (feature, layer) => {
 };
 
 export default class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      center: null
+    };
+  }
+
   componentDidMount() {
     this.markerPool = L.markerClusterGroup({
       zoomToBoundsOnClick: true,
@@ -82,6 +88,7 @@ export default class Map extends React.Component {
     // Geolocation.
     this.maskMap.locate({ setView: true, maxZoom: 16 });
     this.maskMap.on('locationfound', e => {
+      this.setState({ center: e.latlng });
       // Add marker.
       this.marker = L.marker(e.latlng)
         .addTo(this.maskMap)
@@ -92,26 +99,58 @@ export default class Map extends React.Component {
     const legend = getLegendControl();
     legend.addTo(this.maskMap);
 
+    // ToolBar.
+    const customAction = L.Toolbar2.Action.extend({
+      options: {
+        toolbarIcon: {
+          html: '<div><i aria-hidden="true" class="teal street view large icon"></i></div>',
+          tooltip: 'Go to the Eiffel Tower'
+        }
+      },
+      addHooks: () => {
+        this.marker
+          .setLatLng(this.state.center)
+          .bindPopup('You are here!')
+          .openPopup();
+        this.maskMap.flyTo(this.state.center, 18);
+      }
+    });
+    new L.Toolbar2.Control({
+      actions: [customAction]
+    }).addTo(this.maskMap);
   }
 
   componentDidUpdate() {
     this.markerPool.clearLayers();
 
-    const pointToLayer = (feature, latlng) => {
-      const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
-      const marker = L.circleMarker(latlng, getStyle(maskCount));
-
-      this.markerPool.addLayer(marker);
-      return marker;
-    };
+    if (this.props.focus) {
+      const _focus = new L.LatLng(this.props.focus[1], this.props.focus[0]);
+      this.marker
+        .setLatLng(_focus)
+        .bindPopup(
+          `
+          <a href=https://www.google.com.tw/maps/place/${this.props.focus[1]},${this.props.focus[0]} target="_blank" rel="noopener noreferrer">
+            導航到這
+          </a>
+        `
+        )
+        .openPopup();
+      this.maskMap.flyTo(_focus, 18);
+    }
 
     L.geoJSON(this.props.markersData, {
       style: function(feature) {
         return { color: feature.properties.color };
       },
       onEachFeature,
-      pointToLayer
-    }); //.addTo(this.maskMap);
+      pointToLayer: (feature, latlng) => {
+        const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
+        const marker = L.circleMarker(latlng, getStyle(maskCount));
+
+        this.markerPool.addLayer(marker);
+        return marker;
+      }
+    });
 
     this.maskMap.addLayer(this.markerPool);
   }
