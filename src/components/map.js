@@ -64,7 +64,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      center: null
+      myPlace: null,
     };
   }
 
@@ -92,7 +92,7 @@ export default class Map extends React.Component {
     // Geolocation.
     this.maskMap.locate({ setView: true, maxZoom: 16 });
     this.maskMap.on('locationfound', e => {
-      this.setState({ center: e.latlng });
+      this.setState({ myPlace: e.latlng });
       // Add marker.
       this.marker = L.marker(e.latlng)
         .addTo(this.maskMap)
@@ -113,10 +113,10 @@ export default class Map extends React.Component {
       },
       addHooks: () => {
         this.marker
-          .setLatLng(this.state.center)
+          .setLatLng(this.state.myPlace)
           .bindPopup('You are here!')
           .openPopup();
-        this.maskMap.flyTo(this.state.center, 18);
+        this.maskMap.flyTo(this.state.myPlace, 18);
       }
     });
     new L.Toolbar2.Control({
@@ -133,7 +133,7 @@ export default class Map extends React.Component {
         .setLatLng(_focus)
         .bindPopup(
           `
-          <a href=https://www.google.com.tw/maps/place/${this.props.focus[1]},${this.props.focus[0]} target="_blank" rel="noopener noreferrer">
+          <a href="https://www.google.com.tw/maps/dir/${this.state.myPlace.lat},${this.state.myPlace.lng}/${this.props.focus[1]},${this.props.focus[0]}" target="_blank" rel="noopener noreferrer">
             導航到這
           </a>
         `
