@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Progress } from 'semantic-ui-react';
+import { Card, Progress, Message, Icon } from 'semantic-ui-react';
 
 export default class DrugdrugstoreCard extends React.Component {
   constructor(props) {
@@ -32,6 +32,13 @@ export default class DrugdrugstoreCard extends React.Component {
                     <a href={`https://www.google.com.tw/maps/place/${drugstore.properties.address}`} target="_blank" rel="noopener noreferrer">
                       {drugstore.properties.address}
                     </a>
+                    <br />
+                    {drugstore.properties.service_note === '' || drugstore.properties.service_note === '無特定' ? null : (
+                      <Message size="tiny">
+                        <Icon name="bullhorn" />
+                        {drugstore.properties.service_note}
+                      </Message>
+                    )}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
