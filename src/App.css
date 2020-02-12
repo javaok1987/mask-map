@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   position: relative;
 }
 
@@ -36,4 +35,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.floating-panel {
+  position: absolute;
+  width: 284px;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 5000;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 284ms;
+}
+
+.floating-panel__close {
+  position: absolute !important;
+  bottom: 10px;
+  right: -39px;
+}
+
+.is-visible {
+  left: -284px;
+}
+
+.floating-panel__list {
+  margin-top: 20px;
+  padding: 10px 10px 10px 1px;
+  height: 83vh;
+  overflow-y: auto;
 }

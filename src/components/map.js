@@ -7,7 +7,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 // Import JS from Leaflet and plugins.
 import 'leaflet.markercluster';
 
-import './styles/map.scss';
+import '../styles/map.scss';
 
 const L = window.L;
 
@@ -51,15 +51,15 @@ const getLegendControl = () => {
 };
 
 const onEachFeature = (feature, layer) => {
-    const popupContent = `
+  const popupContent = `
       <div class="info-window">
         <h3>${layer.feature.properties.name}</h3>
         <p>成人口罩：${feature.properties.mask_adult} 個</p>
         <p>兒童口罩：${feature.properties.mask_child} 個</p>
       </div>
     `;
-    layer.bindPopup(popupContent);
-  };
+  layer.bindPopup(popupContent);
+};
 
 export default class Map extends React.Component {
   componentDidMount() {
@@ -88,12 +88,14 @@ export default class Map extends React.Component {
         .bindPopup('You are here!')
         .openPopup();
     });
-  }
-
-  componentDidUpdate() {
 
     const legend = getLegendControl();
     legend.addTo(this.maskMap);
+
+  }
+
+  componentDidUpdate() {
+    this.markerPool.clearLayers();
 
     const pointToLayer = (feature, latlng) => {
       const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
