@@ -79,8 +79,12 @@ export default class Map extends React.Component {
       center: [this.props.latitude, this.props.longitude],
       zoom: 16,
       layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          accessToken: 'pk.eyJ1IjoiaWFubGlhbzE5ODciLCJhIjoiY2s2OHFmMzQ0MDV5MjN1bjlmMzF2a3htZyJ9.n70D4lI2aqZ1dj-EGCuqJw'
         })
       ]
     });
