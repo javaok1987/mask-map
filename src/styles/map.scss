@@ -48,6 +48,11 @@
   }
 }
 
-.leaflet-interactive {
-  stroke: #585858;
+.leaflet-pane {
+  .leaflet-overlay-pane {
+    .leaflet-interactive {
+      stroke: #fff;
+      // fill: transparent;
+    }
+  }
 }

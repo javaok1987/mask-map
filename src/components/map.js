@@ -12,6 +12,7 @@ import 'leaflet-toolbar';
 import '../styles/map.scss';
 
 const L = window.L;
+const turf = window.turf;
 
 const getColor = d => {
   return d > 200 ? '#7cafc2' : d > 150 ? '#86c1b9' : d > 100 ? '#a1b56c' : d > 50 ? '#f7ca88' : d > 0 ? '#dc9656' : 'rgba(236,222,239,.9)';
@@ -65,6 +66,11 @@ export default class Map extends React.Component {
     super(props);
     this.state = {
       myPlace: null,
+      markerPool: null,
+      maskMap: null,
+      // mapLayer:null,
+      countryLayer: null,
+      countryName: ''
     };
   }
 
@@ -74,28 +80,31 @@ export default class Map extends React.Component {
       removeOutsideVisibleBounds: true
     });
 
+    const center = [this.props.latitude, this.props.longitude];
     // Create map.
     this.maskMap = L.map('map-canvas', {
-      center: [this.props.latitude, this.props.longitude],
-      zoom: 16,
+      center,
+      zoom: 12,
       layers: [
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
           attribution:
             'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          id: 'mapbox/streets-v11',
+          // maxZoom: 11,
+          id: 'mapbox/dark-v10',
           accessToken: 'pk.eyJ1IjoiaWFubGlhbzE5ODciLCJhIjoiY2s2OHFmMzQ0MDV5MjN1bjlmMzF2a3htZyJ9.n70D4lI2aqZ1dj-EGCuqJw'
         })
       ]
     });
 
+    this.marker = L.marker(center).addTo(this.maskMap);
+
     // Geolocation.
-    this.maskMap.locate({ setView: true, maxZoom: 16 });
+    this.maskMap.locate({ setView: true, maxZoom: 11 });
     this.maskMap.on('locationfound', e => {
       this.setState({ myPlace: e.latlng });
       // Add marker.
-      this.marker = L.marker(e.latlng)
-        .addTo(this.maskMap)
+      this.marker
+        .setLatLng(this.state.myPlace)
         .bindPopup('You are here!')
         .openPopup();
     });
@@ -116,7 +125,7 @@ export default class Map extends React.Component {
           .setLatLng(this.state.myPlace)
           .bindPopup('You are here!')
           .openPopup();
-        this.maskMap.flyTo(this.state.myPlace, 18);
+        this.maskMap.flyTo(this.state.myPlace, 17);
       }
     });
     new L.Toolbar2.Control({
@@ -139,24 +148,52 @@ export default class Map extends React.Component {
         `
         )
         .openPopup();
-      this.maskMap.flyTo(_focus, 18);
+      this.maskMap.flyTo(_focus, 17);
     }
 
-    L.geoJSON(this.props.markersData, {
-      style: function(feature) {
-        return { color: feature.properties.color };
-      },
-      onEachFeature,
-      pointToLayer: (feature, latlng) => {
-        const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
-        const marker = L.circleMarker(latlng, getStyle(maskCount));
+    if (this.props.layer && this.props.layer.length === 1) {
+      const country = this.props.layer[0];
 
-        this.markerPool.addLayer(marker);
-        return marker;
+      // 相同縣市不清除.
+      if (country.properties.name !== this.countryName) {
+        if (this.countryLayer) this.countryLayer.clearLayers();
+
+        const center = turf.centerOfMass(country);
+        const centerLatLng = new L.LatLng(center.geometry.coordinates[1], center.geometry.coordinates[0]);
+
+        this.countryLayer = L.geoJson(null)
+          .addData(this.props.layer)
+          .addTo(this.maskMap);
+
+        this.countryName = country.properties.name;
+
+        this.marker
+          .setLatLng(centerLatLng)
+          .bindPopup(this.countryName)
+          .openPopup();
+
+        this.maskMap.flyTo(centerLatLng, 10);
       }
-    });
 
-    this.maskMap.addLayer(this.markerPool);
+      if (!this.props.markersData) return false;
+
+      const ptsWithin = turf.pointsWithinPolygon(this.props.markersData, this.props.layer[0]);
+      if (ptsWithin) {
+        L.geoJSON(ptsWithin, {
+          style: function(feature) {
+            return { color: feature.properties.color };
+          },
+          onEachFeature,
+          pointToLayer: (feature, latlng) => {
+            const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
+            const marker = L.circleMarker(latlng, getStyle(maskCount));
+            this.markerPool.addLayer(marker);
+            return marker;
+          }
+        });
+        this.maskMap.addLayer(this.markerPool);
+      }
+    }
   }
 
   render() {

@@ -3,8 +3,9 @@
 > 口罩地圖
 
 ### TECHNOLOGY COLOPHON
-- React
-- Leaflet
+- React.js
+- Leaflet.js
+- Turf.js
 - Semantic UI React
 
 ### Quick start

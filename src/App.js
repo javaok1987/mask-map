@@ -17,9 +17,11 @@ export default class App extends React.Component {
         longitude: 121.54924,
         zoom: 16
       },
-      drugstore: '',
+      drugstoreGJson: null,
+      twCountyGJson: null,
+      layer: null,
       focus: null,
-      visible: false,
+      visible: true,
       city: '台北市',
       district: '大安區'
     };
@@ -29,8 +31,22 @@ export default class App extends React.Component {
     fetch('https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json')
       .then(response => response.json())
       .then(geojson => {
-        this.setState({ drugstore: geojson });
+        this.setState({ drugstoreGJson: geojson });
         document.body.classList.add('dom-ready');
+      })
+      .catch(err => {
+        console.log('錯誤:', err);
+      });
+
+    fetch('https://raw.githubusercontent.com/javaok1987/mask-map/master/src/data/tw-county.geojson')
+      .then(response => response.json())
+      .then(geojson => {
+        this.setState({ twCountyGJson: geojson });
+        this.setState({
+          layer: this.state.twCountyGJson['features'].filter(county => {
+            return county.properties.name === this.state.city;
+          })
+        });
       })
       .catch(err => {
         console.log('錯誤:', err);
@@ -42,11 +58,17 @@ export default class App extends React.Component {
   }
 
   handleCity = city => {
-    this.setState({ city });
+    this.setState({
+      city,
+      focus: null,
+      layer: this.state.twCountyGJson['features'].filter(county => {
+        return county.properties.name === city;
+      })
+    });
   };
 
   handleDistrict = district => {
-    this.setState({ district });
+    this.setState({ focus: null, district });
   };
 
   handleClickDrugstore = drugstore => {
@@ -56,14 +78,14 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { viewport, drugstore, city, district, focus } = this.state;
+    const { viewport, drugstoreGJson, city, district, focus, layer } = this.state;
 
     return (
       <div className="App">
-        <MaskMap {...viewport} markersData={drugstore} focus={focus}></MaskMap>
+        <MaskMap {...viewport} markersData={drugstoreGJson} layer={layer} focus={focus}></MaskMap>
         <div className={this.state.visible ? 'floating-panel is-visible' : 'floating-panel'}>
           <CitySelect onSelectCity={this.handleCity} onSelectDistrict={this.handleDistrict}></CitySelect>
-          <DrugstoreCard markersData={drugstore} city={city} district={district} onClickDrugstore={this.handleClickDrugstore}></DrugstoreCard>
+          <DrugstoreCard markersData={drugstoreGJson} city={city} district={district} onClickDrugstore={this.handleClickDrugstore}></DrugstoreCard>
           <Button icon compact color="teal" labelPosition="right" className="floating-panel__close" onClick={() => this.toggleSidebar(this.state.visible)}>
             關閉
             <Icon name={this.state.visible ? 'angle double right' : 'angle double left'} />

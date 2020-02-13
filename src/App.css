@@ -48,7 +48,7 @@
   width: 284px;
   height: 100vh;
   top: 0;
-  left: 0;
+  left: -284px;
   z-index: 5000;
   padding: 10px;
   background: #d4d4d5;
@@ -63,7 +63,7 @@
 }
 
 .is-visible {
-  left: -284px;
+  left: 0;
 }
 
 .floating-panel__list {
