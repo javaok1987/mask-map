@@ -1,8 +1,8 @@
-# Mask Map
+# MASK MAP
 
 > 口罩地圖
 
-### TECHNOLOGY COLOPHON
+### Technology colophon
 - React.js
 - Leaflet.js
 - Turf.js
