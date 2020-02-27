@@ -38,8 +38,9 @@ const getLegendControl = () => {
 
     for (let i = 0; i < grades.length; i++) {
       labels.push(`
+
         <div class="legend-item">
-          <i style="background:${getColor(grades[i] + 1)}"></i>
+        成人口罩數量:<i style="background:${getColor(grades[i] + 1)}"></i>
           ${grades[i]}${grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'}
         </div>
       `);
@@ -116,7 +117,7 @@ export default class Map extends React.Component {
     const customAction = L.Toolbar2.Action.extend({
       options: {
         toolbarIcon: {
-          html: '<div><i aria-hidden="true" class="teal street view large icon"></i></div>',
+          html: '<div><i aria-hidden="true" class="crosshairs small icon"></i></div>',
           tooltip: 'Go to the Eiffel Tower'
         }
       },
@@ -185,7 +186,7 @@ export default class Map extends React.Component {
           },
           onEachFeature,
           pointToLayer: (feature, latlng) => {
-            const maskCount = feature.properties.mask_adult + feature.properties.mask_child;
+            const maskCount = feature.properties.mask_adult;
             const marker = L.circleMarker(latlng, getStyle(maskCount));
             this.markerPool.addLayer(marker);
             return marker;
