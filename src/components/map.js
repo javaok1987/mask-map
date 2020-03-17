@@ -40,7 +40,7 @@ const getLegendControl = () => {
       labels.push(`
 
         <div class="legend-item">
-        成人口罩數量:<i style="background:${getColor(grades[i] + 1)}"></i>
+        adult:<i style="background:${getColor(grades[i] + 1)}"></i>
           ${grades[i]}${grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'}
         </div>
       `);
@@ -87,12 +87,8 @@ export default class Map extends React.Component {
       center,
       zoom: 12,
       layers: [
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-          attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          // maxZoom: 11,
-          id: 'mapbox/dark-v10',
-          accessToken: 'pk.eyJ1IjoiaWFubGlhbzE5ODciLCJhIjoiY2s2OHFmMzQ0MDV5MjN1bjlmMzF2a3htZyJ9.n70D4lI2aqZ1dj-EGCuqJw'
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         })
       ]
     });
@@ -122,11 +118,13 @@ export default class Map extends React.Component {
         }
       },
       addHooks: () => {
-        this.marker
-          .setLatLng(this.state.myPlace)
-          .bindPopup('You are here!')
-          .openPopup();
-        this.maskMap.flyTo(this.state.myPlace, 17);
+        if (this.state.myPlace) {
+          this.marker
+            .setLatLng(this.state.myPlace)
+            .bindPopup('You are here!')
+            .openPopup();
+          this.maskMap.flyTo(this.state.myPlace, 17);
+        }
       }
     });
     new L.Toolbar2.Control({
@@ -142,11 +140,9 @@ export default class Map extends React.Component {
       this.marker
         .setLatLng(_focus)
         .bindPopup(
-          `
-          <a href="https://www.google.com.tw/maps/dir/${this.state.myPlace.lat},${this.state.myPlace.lng}/${this.props.focus[1]},${this.props.focus[0]}" target="_blank" rel="noopener noreferrer">
-            導航到這
-          </a>
-        `
+          this.state.myPlace
+            ? `<a href="https://www.google.com.tw/maps/dir/${this.state.myPlace.lat},${this.state.myPlace.lng}/${this.props.focus[1]},${this.props.focus[0]}" target="_blank" rel="noopener noreferrer">導航到這</a>`
+            : `<a href=https://www.google.com.tw/maps/place/${this.props.focus[1]},${this.props.focus[0]} target="_blank" rel="noopener noreferrer">導航到這</a>`
         )
         .openPopup();
       this.maskMap.flyTo(_focus, 17);

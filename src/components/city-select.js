@@ -13,21 +13,14 @@ export default class SelectCountry extends React.Component {
         value: item.name
       })),
       districtOptions: [
-        { key: 1, text: '中正區', value: '中正區' },
-        { key: 2, text: '大同區', value: '大同區' },
-        { key: 3, text: '中山區', value: '中山區' },
-        { key: 4, text: '松山區', value: '松山區' },
-        { key: 5, text: '大安區', value: '大安區' },
-        { key: 6, text: '萬華區', value: '萬華區' },
-        { key: 7, text: '信義區', value: '信義區' },
-        { key: 8, text: '士林區', value: '士林區' },
-        { key: 9, text: '北投區', value: '北投區' },
-        { key: 10, text: '內湖區', value: '內湖區' },
-        { key: 11, text: '南港區', value: '南港區' },
-        { key: 12, text: '文山區', value: '文山區' }
+        { key: 15, text: '板橋區', value: '板橋區' },
+        { key: 28, text: '土城區', value: '土城區' },
+        { key: 23, text: '新店區', value: '新店區' },
+        { key: 26, text: '永和區', value: '永和區' },
+        { key: 27, text: '中和區', value: '中和區' }
       ],
-      city: '台北市',
-      district: '大安區'
+      city: '新北市',
+      district: '土城區'
     };
   }
 

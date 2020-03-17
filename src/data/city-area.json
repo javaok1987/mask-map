@@ -66,32 +66,22 @@
     ]
   },
   {
-    "id": "3",
-    "name": "連江縣",
+    "id": "8",
+    "name": "桃園市",
     "districts": [
-      { "id": 49, "zipCode": "209", "name": "南竿鄉" },
-      { "id": 50, "zipCode": "210", "name": "北竿鄉" },
-      { "id": 51, "zipCode": "211", "name": "莒光鄉" },
-      { "id": 52, "zipCode": "212", "name": "東引鄉" }
-    ]
-  },
-  {
-    "id": "4",
-    "name": "宜蘭縣",
-    "districts": [
-      { "id": 53, "zipCode": "260", "name": "宜蘭市" },
-      { "id": 54, "zipCode": "261", "name": "頭城鎮" },
-      { "id": 55, "zipCode": "262", "name": "礁溪鄉" },
-      { "id": 56, "zipCode": "263", "name": "壯圍鄉" },
-      { "id": 57, "zipCode": "264", "name": "員山鄉" },
-      { "id": 58, "zipCode": "265", "name": "羅東鎮" },
-      { "id": 59, "zipCode": "266", "name": "三星鄉" },
-      { "id": 60, "zipCode": "267", "name": "大同鄉" },
-      { "id": 61, "zipCode": "268", "name": "五結鄉" },
-      { "id": 62, "zipCode": "269", "name": "冬山鄉" },
-      { "id": 63, "zipCode": "270", "name": "蘇澳鎮" },
-      { "id": 64, "zipCode": "272", "name": "南澳鄉" },
-      { "id": 376, "zipCode": "290", "name": "釣魚台" }
+      { "id": 83, "zipCode": "320", "name": "中壢區" },
+      { "id": 84, "zipCode": "324", "name": "平鎮區" },
+      { "id": 85, "zipCode": "325", "name": "龍潭區" },
+      { "id": 86, "zipCode": "326", "name": "楊梅區" },
+      { "id": 87, "zipCode": "327", "name": "新屋區" },
+      { "id": 88, "zipCode": "328", "name": "觀音區" },
+      { "id": 89, "zipCode": "330", "name": "桃園區" },
+      { "id": 90, "zipCode": "333", "name": "龜山區" },
+      { "id": 91, "zipCode": "334", "name": "八德區" },
+      { "id": 92, "zipCode": "335", "name": "大溪區" },
+      { "id": 93, "zipCode": "336", "name": "復興區" },
+      { "id": 94, "zipCode": "337", "name": "大園區" },
+      { "id": 95, "zipCode": "338", "name": "蘆竹區" }
     ]
   },
   {
@@ -121,25 +111,6 @@
       { "id": 80, "zipCode": "313", "name": "尖石鄉" },
       { "id": 81, "zipCode": "314", "name": "北埔鄉" },
       { "id": 82, "zipCode": "315", "name": "峨眉鄉" }
-    ]
-  },
-  {
-    "id": "8",
-    "name": "桃園市",
-    "districts": [
-      { "id": 83, "zipCode": "320", "name": "中壢區" },
-      { "id": 84, "zipCode": "324", "name": "平鎮區" },
-      { "id": 85, "zipCode": "325", "name": "龍潭區" },
-      { "id": 86, "zipCode": "326", "name": "楊梅區" },
-      { "id": 87, "zipCode": "327", "name": "新屋區" },
-      { "id": 88, "zipCode": "328", "name": "觀音區" },
-      { "id": 89, "zipCode": "330", "name": "桃園區" },
-      { "id": 90, "zipCode": "333", "name": "龜山區" },
-      { "id": 91, "zipCode": "334", "name": "八德區" },
-      { "id": 92, "zipCode": "335", "name": "大溪區" },
-      { "id": 93, "zipCode": "336", "name": "復興區" },
-      { "id": 94, "zipCode": "337", "name": "大園區" },
-      { "id": 95, "zipCode": "338", "name": "蘆竹區" }
     ]
   },
   {
@@ -399,30 +370,6 @@
     ]
   },
   {
-    "id": "22",
-    "name": "澎湖縣",
-    "districts": [
-      { "id": 302, "zipCode": "880", "name": "馬公市" },
-      { "id": 303, "zipCode": "881", "name": "西嶼鄉" },
-      { "id": 304, "zipCode": "882", "name": "望安鄉" },
-      { "id": 305, "zipCode": "883", "name": "七美鄉" },
-      { "id": 306, "zipCode": "884", "name": "白沙鄉" },
-      { "id": 307, "zipCode": "885", "name": "湖西鄉" }
-    ]
-  },
-  {
-    "id": "23",
-    "name": "金門縣",
-    "districts": [
-      { "id": 308, "zipCode": "890", "name": "金沙鎮" },
-      { "id": 309, "zipCode": "891", "name": "金湖鎮" },
-      { "id": 310, "zipCode": "892", "name": "金寧鄉" },
-      { "id": 311, "zipCode": "893", "name": "金城鎮" },
-      { "id": 312, "zipCode": "894", "name": "烈嶼鄉" },
-      { "id": 313, "zipCode": "896", "name": "烏坵鄉" }
-    ]
-  },
-  {
     "id": "24",
     "name": "屏東縣",
     "districts": [
@@ -462,6 +409,44 @@
     ]
   },
   {
+    "id": "4",
+    "name": "宜蘭縣",
+    "districts": [
+      { "id": 53, "zipCode": "260", "name": "宜蘭市" },
+      { "id": 54, "zipCode": "261", "name": "頭城鎮" },
+      { "id": 55, "zipCode": "262", "name": "礁溪鄉" },
+      { "id": 56, "zipCode": "263", "name": "壯圍鄉" },
+      { "id": 57, "zipCode": "264", "name": "員山鄉" },
+      { "id": 58, "zipCode": "265", "name": "羅東鎮" },
+      { "id": 59, "zipCode": "266", "name": "三星鄉" },
+      { "id": 60, "zipCode": "267", "name": "大同鄉" },
+      { "id": 61, "zipCode": "268", "name": "五結鄉" },
+      { "id": 62, "zipCode": "269", "name": "冬山鄉" },
+      { "id": 63, "zipCode": "270", "name": "蘇澳鎮" },
+      { "id": 64, "zipCode": "272", "name": "南澳鄉" },
+      { "id": 376, "zipCode": "290", "name": "釣魚台" }
+    ]
+  },
+  {
+    "id": "26",
+    "name": "花蓮縣",
+    "districts": [
+      { "id": 363, "zipCode": "970", "name": "花蓮市" },
+      { "id": 364, "zipCode": "971", "name": "新城鄉" },
+      { "id": 365, "zipCode": "972", "name": "秀林鄉" },
+      { "id": 366, "zipCode": "973", "name": "吉安鄉" },
+      { "id": 367, "zipCode": "974", "name": "壽豐鄉" },
+      { "id": 368, "zipCode": "975", "name": "鳳林鎮" },
+      { "id": 369, "zipCode": "976", "name": "光復鄉" },
+      { "id": 370, "zipCode": "977", "name": "豐濱鄉" },
+      { "id": 371, "zipCode": "978", "name": "瑞穗鄉" },
+      { "id": 372, "zipCode": "979", "name": "萬榮鄉" },
+      { "id": 373, "zipCode": "981", "name": "玉里鎮" },
+      { "id": 374, "zipCode": "982", "name": "卓溪鄉" },
+      { "id": 375, "zipCode": "983", "name": "富里鄉" }
+    ]
+  },
+  {
     "id": "25",
     "name": "台東縣",
     "districts": [
@@ -484,22 +469,37 @@
     ]
   },
   {
-    "id": "26",
-    "name": "花蓮縣",
+    "id": "22",
+    "name": "澎湖縣",
     "districts": [
-      { "id": 363, "zipCode": "970", "name": "花蓮市" },
-      { "id": 364, "zipCode": "971", "name": "新城鄉" },
-      { "id": 365, "zipCode": "972", "name": "秀林鄉" },
-      { "id": 366, "zipCode": "973", "name": "吉安鄉" },
-      { "id": 367, "zipCode": "974", "name": "壽豐鄉" },
-      { "id": 368, "zipCode": "975", "name": "鳳林鎮" },
-      { "id": 369, "zipCode": "976", "name": "光復鄉" },
-      { "id": 370, "zipCode": "977", "name": "豐濱鄉" },
-      { "id": 371, "zipCode": "978", "name": "瑞穗鄉" },
-      { "id": 372, "zipCode": "979", "name": "萬榮鄉" },
-      { "id": 373, "zipCode": "981", "name": "玉里鎮" },
-      { "id": 374, "zipCode": "982", "name": "卓溪鄉" },
-      { "id": 375, "zipCode": "983", "name": "富里鄉" }
+      { "id": 302, "zipCode": "880", "name": "馬公市" },
+      { "id": 303, "zipCode": "881", "name": "西嶼鄉" },
+      { "id": 304, "zipCode": "882", "name": "望安鄉" },
+      { "id": 305, "zipCode": "883", "name": "七美鄉" },
+      { "id": 306, "zipCode": "884", "name": "白沙鄉" },
+      { "id": 307, "zipCode": "885", "name": "湖西鄉" }
+    ]
+  },
+  {
+    "id": "23",
+    "name": "金門縣",
+    "districts": [
+      { "id": 308, "zipCode": "890", "name": "金沙鎮" },
+      { "id": 309, "zipCode": "891", "name": "金湖鎮" },
+      { "id": 310, "zipCode": "892", "name": "金寧鄉" },
+      { "id": 311, "zipCode": "893", "name": "金城鎮" },
+      { "id": 312, "zipCode": "894", "name": "烈嶼鄉" },
+      { "id": 313, "zipCode": "896", "name": "烏坵鄉" }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "連江縣",
+    "districts": [
+      { "id": 49, "zipCode": "209", "name": "南竿鄉" },
+      { "id": 50, "zipCode": "210", "name": "北竿鄉" },
+      { "id": 51, "zipCode": "211", "name": "莒光鄉" },
+      { "id": 52, "zipCode": "212", "name": "東引鄉" }
     ]
   }
 ]

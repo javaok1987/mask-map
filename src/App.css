@@ -39,16 +39,16 @@
 
 .dom-ready {
   opacity: 1;
-  transition: opacity .5s;
-  background: transparent
+  transition: opacity 0.5s;
+  background: transparent;
 }
 
 .floating-panel {
   position: absolute;
-  width: 284px;
+  width: 320px;
   height: 100vh;
   top: 0;
-  left: -284px;
+  left: -320px;
   z-index: 5000;
   padding: 10px;
   background: #d4d4d5;
@@ -66,6 +66,10 @@
   left: 0;
 }
 
+.is-disable {
+  display: none !important;
+}
+
 .floating-panel__list {
   margin-top: 20px;
   padding: 10px 10px 10px 1px;
@@ -73,6 +77,6 @@
   overflow-y: auto;
 }
 
-.floating-panel__list .header{
+.floating-panel__list .header {
   cursor: pointer;
 }

@@ -22,8 +22,9 @@ export default class App extends React.Component {
       layer: null,
       focus: null,
       visible: true,
-      city: '台北市',
-      district: '大安區'
+      showChild:false,
+      city: '新北市',
+      district: '土城區'
     };
   }
 

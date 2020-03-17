@@ -1,10 +1,28 @@
 import React from 'react';
-import { Card, Progress, Message, Icon } from 'semantic-ui-react';
+import { Card, Progress } from 'semantic-ui-react';
 
 export default class DrugdrugstoreCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  /**
+   * 計算兩個坐標點之間的距離
+   * @param {*} lat1
+   * @param {*} lng1
+   * @param {*} lat2
+   * @param {*} lng2
+   */
+  getDistance(lat1, lng1, lat2, lng2) {
+    const radLat1 = (lat1 * Math.PI) / 180.0;
+    const radLat2 = (lat2 * Math.PI) / 180.0;
+    const a = radLat1 - radLat2;
+    const b = (lng1 * Math.PI) / 180.0 - (lng2 * Math.PI) / 180.0;
+    let s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+    s = s * 6378.137; // EARTH_RADIUS;
+    s = Math.round(s * 10000) / 10000;
+    return s;
   }
 
   getPercent(mask, total) {
@@ -23,8 +41,8 @@ export default class DrugdrugstoreCard extends React.Component {
       <div className="floating-panel__list">
         {this.props.markersData &&
           this.props.markersData.features.map(drugstore => {
-            return drugstore.properties.address.substring(0, currentLocation.length) === currentLocation ? (
-              <Card key={drugstore.properties.id}>
+            return drugstore.properties.address.substring(0, currentLocation.length) === currentLocation ? ( // 縣市區域過濾.
+              <Card key={drugstore.properties.id} className={drugstore.properties.mask_adult === 0 ? 'is-disable' : ''}>
                 <Card.Content>
                   <Card.Header onClick={() => this.handleClick(drugstore.geometry)}>{drugstore.properties.name}</Card.Header>
                   <Card.Meta>{drugstore.properties.phone}</Card.Meta>
@@ -32,13 +50,6 @@ export default class DrugdrugstoreCard extends React.Component {
                     <a href={`https://www.google.com.tw/maps/place/${drugstore.properties.address}`} target="_blank" rel="noopener noreferrer">
                       {drugstore.properties.address}
                     </a>
-                    <br />
-                    {drugstore.properties.service_note === '' || drugstore.properties.service_note === '無特定' ? null : (
-                      <Message size="tiny">
-                        <Icon name="bullhorn" />
-                        {drugstore.properties.service_note}
-                      </Message>
-                    )}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
