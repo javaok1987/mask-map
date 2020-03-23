@@ -15,12 +15,12 @@ const L = window.L;
 const turf = window.turf;
 
 const getColor = d => {
-  return d > 200 ? '#7cafc2' : d > 150 ? '#86c1b9' : d > 100 ? '#a1b56c' : d > 50 ? '#f7ca88' : d > 0 ? '#dc9656' : 'rgba(236,222,239,.9)';
+  return d > 480 ? '#7cafc2' : d > 360 ? '#86c1b9' : d > 240 ? '#a1b56c' : d > 120 ? '#f7ca88' : d > 0 ? '#dc9656' : 'rgba(236,222,239,.9)';
 };
 
 const getStyle = maskCount => {
   return {
-    radius: 8,
+    radius: 10,
     weight: 1,
     opacity: 1,
     fillOpacity: 1,
@@ -33,15 +33,13 @@ const getLegendControl = () => {
   const legend = L.control({ position: 'bottomright' });
   legend.onAdd = () => {
     const div = L.DomUtil.create('div', 'legend-panel');
-    const grades = [0, 50, 100, 150, 200];
+    const grades = [0, 120, 240, 360, 480];
     const labels = [];
 
     for (let i = 0; i < grades.length; i++) {
       labels.push(`
-
         <div class="legend-item">
-        adult:<i style="background:${getColor(grades[i] + 1)}"></i>
-          ${grades[i]}${grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'}
+          <i style="background:${getColor(grades[i] + 1)}"></i>${grades[i]}↑
         </div>
       `);
     }
@@ -87,8 +85,9 @@ export default class Map extends React.Component {
       center,
       zoom: 12,
       layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+          maxZoom: 20,
+          attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         })
       ]
     });
@@ -141,8 +140,8 @@ export default class Map extends React.Component {
         .setLatLng(_focus)
         .bindPopup(
           this.state.myPlace
-            ? `<a href="https://www.google.com.tw/maps/dir/${this.state.myPlace.lat},${this.state.myPlace.lng}/${this.props.focus[1]},${this.props.focus[0]}" target="_blank" rel="noopener noreferrer">導航到這</a>`
-            : `<a href=https://www.google.com.tw/maps/place/${this.props.focus[1]},${this.props.focus[0]} target="_blank" rel="noopener noreferrer">導航到這</a>`
+            ? `<a href="https://www.google.com.tw/maps/dir/${this.state.myPlace.lat},${this.state.myPlace.lng}/${this.props.focus[1]},${this.props.focus[0]}" target="_blank" rel="noopener noreferrer">前往藥局</a>`
+            : `<a href=https://www.google.com.tw/maps/place/${this.props.focus[1]},${this.props.focus[0]} target="_blank" rel="noopener noreferrer">前往藥局</a>`
         )
         .openPopup();
       this.maskMap.flyTo(_focus, 17);

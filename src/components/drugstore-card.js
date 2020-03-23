@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Progress } from 'semantic-ui-react';
+import { Card, Progress, Message, Icon } from 'semantic-ui-react';
 
 export default class DrugdrugstoreCard extends React.Component {
   constructor(props) {
@@ -43,20 +43,29 @@ export default class DrugdrugstoreCard extends React.Component {
           this.props.markersData.features.map(drugstore => {
             return drugstore.properties.address.substring(0, currentLocation.length) === currentLocation ? ( // 縣市區域過濾.
               <Card key={drugstore.properties.id} className={drugstore.properties.mask_adult === 0 ? 'is-disable' : ''}>
-                <Card.Content>
-                  <Card.Header onClick={() => this.handleClick(drugstore.geometry)}>{drugstore.properties.name}</Card.Header>
+                <Card.Content onClick={() => this.handleClick(drugstore.geometry)}>
+                  <Card.Header>{drugstore.properties.name}</Card.Header>
                   <Card.Meta>{drugstore.properties.phone}</Card.Meta>
                   <Card.Description>
+                    {drugstore.properties.address}
                     <a href={`https://www.google.com.tw/maps/place/${drugstore.properties.address}`} target="_blank" rel="noopener noreferrer">
-                      {drugstore.properties.address}
+                      {' '}
+                      MAP
                     </a>
+                    <br />
+                    {drugstore.properties.custom_note === '' ? null : (
+                      <Message size="tiny">
+                        <Icon name="bullhorn" />
+                        {drugstore.properties.custom_note}
+                      </Message>
+                    )}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <Progress percent={this.getPercent(drugstore.properties.mask_adult, 200)} indicating>
+                  <Progress percent={this.getPercent(drugstore.properties.mask_adult, 600)} indicating>
                     成人:{drugstore.properties.mask_adult}
                   </Progress>
-                  <Progress percent={this.getPercent(drugstore.properties.mask_child, 50)} indicating>
+                  <Progress percent={this.getPercent(drugstore.properties.mask_child, 200)} indicating>
                     兒童:{drugstore.properties.mask_child}
                   </Progress>
                 </Card.Content>

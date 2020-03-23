@@ -66,7 +66,7 @@ export default class SelectCountry extends React.Component {
           floating
           labeled
           scrolling
-          icon="map marker alternate"
+          icon="filter"
           options={cityOptions}
           onChange={this.handleCity}
           text={city}
@@ -77,7 +77,7 @@ export default class SelectCountry extends React.Component {
           floating
           labeled
           scrolling
-          icon="map marker alternate"
+          icon="filter"
           options={districtOptions}
           onChange={this.handleDistrict}
           text={district}

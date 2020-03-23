@@ -6,6 +6,7 @@ import CitySelect from './components/city-select';
 
 import { Button, Icon } from 'semantic-ui-react';
 
+import 'normalize.css';
 import './App.css';
 
 export default class App extends React.Component {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
       layer: null,
       focus: null,
       visible: true,
-      showChild:false,
+      showChild: false,
       city: '新北市',
       district: '土城區'
     };
@@ -33,6 +34,7 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(geojson => {
         this.setState({ drugstoreGJson: geojson });
+        if (('availWidth', window.screen.availWidth <= 768)) this.setState({ visible: false });
         document.body.classList.add('dom-ready');
       })
       .catch(err => {
@@ -82,14 +84,17 @@ export default class App extends React.Component {
     const { viewport, drugstoreGJson, city, district, focus, layer } = this.state;
 
     return (
-      <div className="App">
+      <div className="app">
         <MaskMap {...viewport} markersData={drugstoreGJson} layer={layer} focus={focus}></MaskMap>
         <div className={this.state.visible ? 'floating-panel is-visible' : 'floating-panel'}>
-          <CitySelect onSelectCity={this.handleCity} onSelectDistrict={this.handleDistrict}></CitySelect>
+          <div className="floating-panel__header">
+            <h3>口罩地圖 MASK MAP</h3>
+            <CitySelect onSelectCity={this.handleCity} onSelectDistrict={this.handleDistrict}></CitySelect>
+          </div>
           <DrugstoreCard markersData={drugstoreGJson} city={city} district={district} onClickDrugstore={this.handleClickDrugstore}></DrugstoreCard>
           <Button icon compact color="teal" labelPosition="right" className="floating-panel__close" onClick={() => this.toggleSidebar(this.state.visible)}>
             關閉
-            <Icon name={this.state.visible ? 'angle double right' : 'angle double left'} />
+            <Icon name={this.state.visible ? 'angle double left' : 'angle double right'} />
           </Button>
         </div>
       </div>
